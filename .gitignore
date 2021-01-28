@@ -1,3 +1,4 @@
 kaldi_model/
 kaldi_model.tmp/
 .idea/
+__pycache__/
