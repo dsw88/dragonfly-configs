@@ -2,6 +2,8 @@ from dragonfly import (
     Grammar,
     Key,
     IntegerRef,
+    Text,
+    Dictation,
 )
 
 from lib.series_mapping import SeriesMappingRule
@@ -83,7 +85,7 @@ keyboard_mapping = {
     "back slash": Key("backslash"),
     "bar": Key("|"),
     "comma": Key("comma"),
-    "period": Key("dot"),
+    "dot | period": Key("dot"),
     "left angle": Key("<"),
     "right angle": Key(">"),
 }
@@ -131,7 +133,39 @@ navigation_mapping = {
     "go way down": Key("w-down"),
 }
 
-extras = [IntegerRef("n", 1, 9999)]
+formatting_mapping = {
+    "say <text>": Text("%(text)s"),
+    "snake <snaketext>": Text("%(snaketext)s"),
+    "kebab <kebabtext>": Text("%(kebabtext)s"),
+    "hammer <hammertext>": Text("%(hammertext)s"),
+    "title <titletext>": Text("%(titletext)s"),
+    "sentence <sentencetext>": Text("%(sentencetext)s"),
+    "all caps <allcapstext>": Text("%(allcapstext)s"),
+    "camel <cameltext>": Text("%(cameltext)s"),
+    "constant <constanttext>": Text("%(constanttext)s"),
+    "dotted <dottedtext>": Text("%(dottedtext)s"),
+    "dunder <snaketext>": Text("__%(snaketext)s"),
+    "slasher <slashtext>": Text("%(slashtext)s"),
+    "smash <smashtext>": Text("%(smashtext)s"),
+}
+
+extras = [
+    IntegerRef("n", 1, 9999),
+    Dictation("text"),
+    Dictation("snaketext").lower().replace(" ", "_"),
+    Dictation("kebabtext").lower().replace(" ", "-"),
+    Dictation("hammertext").title().replace(" ", ""),
+    Dictation("titletext").title(),
+    Dictation("sentencetext").capitalize(),
+    Dictation("allcapstext").upper(),
+    Dictation("cameltext").camel(),
+    Dictation("constanttext").upper().replace(" ", "_"),
+    Dictation("dottedtext").replace(" ", "."),
+    Dictation("slashtext").replace(" ", "/"),
+    Dictation("smashtext").replace(" ", ""),
+]
+
+
 defaults = {"n": 1}
 
 keyboard_rule = SeriesMappingRule(
@@ -140,6 +174,7 @@ keyboard_rule = SeriesMappingRule(
         **keyboard_mapping,
         **navigation_mapping,
         **edit_mapping,
+        **formatting_mapping,
     },
     extras=extras,
     defaults=defaults,

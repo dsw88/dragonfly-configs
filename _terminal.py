@@ -36,6 +36,12 @@ class TerminalRule(MappingRule):
         "pip list": Text("pip list") + Key("enter"),
         "vim save": Text(":w") + Key("enter"),
         "vim quit": Text(":wq") + Key("enter"),
+        "git status": Text("git status") + Key("enter"),
+        "git branch": Text("git branch") + Key("enter"),
+        "git commit": Text("git commit") + Key("enter"),
+        "git pull": Text("git pull") + Key("enter"),
+        "git push": Text("git push") + Key("enter"),
+        "git add all": Text("git add -A") + Key("enter"),
     }
 
 
