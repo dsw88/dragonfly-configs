@@ -81,7 +81,7 @@ keyboard_mapping = {
     "single quote": Key("squote"),
     "double quote": Key("dquote"),
     "question mark": Key("question"),
-    "forward slash": Key("slash"),
+    "slash": Key("slash"),
     "back slash": Key("backslash"),
     "bar": Key("|"),
     "comma": Key("comma"),
@@ -91,6 +91,7 @@ keyboard_mapping = {
 }
 
 edit_mapping = {
+    "slap": Key("w-right") + Key("enter"),
     "cut that": Key("w-x"),
     "copy that": Key("w-c"),
     "paste that": Key("w-v"),
@@ -169,6 +170,7 @@ extras = [
 defaults = {"n": 1}
 
 keyboard_rule = SeriesMappingRule(
+    name="keyboard",
     mapping={
         **alphabet_mapping,
         **keyboard_mapping,

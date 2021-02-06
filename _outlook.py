@@ -1,4 +1,4 @@
-from dragonfly import Grammar, AppContext, MappingRule, Key, Text
+from dragonfly import Grammar, AppContext, MappingRule, Key
 
 
 class OutlookRule(MappingRule):
