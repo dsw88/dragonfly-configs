@@ -2,14 +2,12 @@
 # Create a compound rule which demonstrates CompoundRule and Choice types.
 from dragonfly import Grammar, MappingRule, Function, Choice
 from lang.python_lang import python_rule
-from lang.typescript_lang import typescript_rule
 from lang.terraform_lang import terraform_rule
 
 
 langs = {
     "python": python_rule,
     "terraform": terraform_rule,
-    "typescript": typescript_rule,
 }
 
 
@@ -39,7 +37,6 @@ class EnableLangRule(MappingRule):
             {
                 "terraform": "terraform",
                 "python": "python",
-                "typescript": "typescript",
             },
         )
     ]
