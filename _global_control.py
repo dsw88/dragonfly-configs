@@ -5,7 +5,18 @@ from dragonfly import (
     Choice,
     MappingRule,
     IntegerRef,
+    Dictation,
+    Function,
 )
+from dragonfly.windows import Window
+import applescript
+
+
+def focus_app(app_name):
+    if app_name == "":
+        return
+    script = f'tell application "{app_name}" to activate'
+    applescript.AppleScript(script).run()
 
 
 # Requires the 'Magnet' tool in MacOS
@@ -30,6 +41,34 @@ class MagnetRule(CompoundRule):
 # Requires Vimac
 class VimacRule(MappingRule):
     mapping = {"good": Key("a-space"), "slide": Key("c-;")}
+
+
+class AppFocusRule(MappingRule):
+    mapping = {"focus <app_name>": Function(focus_app)}
+    extras = [
+        Choice(
+            "app_name",
+            {
+                "intellij [idea]": "IntelliJ IDEA",
+                "teams": "Microsoft Teams",
+                "eye term": "iTerm2",
+                "terminal": "Terminal",
+                "edge": "Microsoft Edge",
+                "chrome": "Google Chrome",
+                "amazon music": "Amazon Music",
+                "music": "Music",
+                "outlook": "Microsoft Outlook",
+                "zoom": "zoom.us",
+                "code": "Visual Studio Code",
+                "slack": "Slack",
+                "obsidian": "Obsidian",
+                "excel": "Microsoft Excel",
+                "power point": "Microsoft PowerPoint",
+                "word": "Microsoft Word",
+            },
+        )
+    ]
+    defaults = {"lang": ""}
 
 
 class WindowNavigationRule(MappingRule):
@@ -63,6 +102,7 @@ class GlobalControlRule(MappingRule):
 grammar = Grammar(name="global_control")
 grammar.add_rule(MagnetRule())
 grammar.add_rule(VimacRule())
+grammar.add_rule(AppFocusRule())
 grammar.add_rule(WindowNavigationRule())
 grammar.add_rule(GlobalControlRule())
 grammar.load()
