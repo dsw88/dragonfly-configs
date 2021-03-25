@@ -52,7 +52,7 @@ class TerminalRule(MappingRule):
         "git new branch": Text("git checkout -b "),
         "git push head": Text("git push origin HEAD") + Key("enter"),
         "git push tags": Text("git push --tags") + Key("enter"),
-        "git (remove|delete) branch": Text("git branch -d ") + Key("enter"),
+        "git (remove|delete) branch": Text("git branch -d "),
         "git reset": Text("git reset "),
         "git reset hard": Text("git reset --hard "),
         "git stash pop": Text("git stash pop") + Key("enter"),
