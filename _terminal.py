@@ -4,7 +4,7 @@ from dragonfly import Grammar, AppContext, MappingRule, Key, Text
 class TerminalRule(MappingRule):
     mapping = {
         "tab next": Key("ws-]"),
-        "tab previous": Key("ws-["),
+        "tab last": Key("ws-["),
         "tab new": Key("w-t"),
         "kill all": Key("c-c"),
         "split vertical": Key("w-d"),

@@ -65,6 +65,7 @@ class AppFocusRule(MappingRule):
                 "excel": "Microsoft Excel",
                 "power point": "Microsoft PowerPoint",
                 "word": "Microsoft Word",
+                "firefox": "Firefox",
             },
         )
     ]
