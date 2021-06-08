@@ -36,25 +36,48 @@ alphabet = {
     "yank": "y",
     "zip": "z",
 }
-
 alphabet_mapping = {word: Key(alphabet[word]) for word in alphabet}
 
-keyboard_mapping = {
-    "one": Key("1"),
-    "two": Key("2"),
-    "three": Key("3"),
-    "four": Key("4"),
-    "five": Key("5"),
-    "six": Key("6"),
-    "seven": Key("7"),
-    "eight": Key("8"),
-    "nine": Key("9"),
-    "zero": Key("0"),
-    "enter": Key("enter"),
-    "tab": Key("tab"),
-    "space": Key("space"),
+other_keys = {
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+    "zero": "0",
+    "enter": "enter",
+    "tab": "tab",
+    "space": "space",
+    "escape": "escape",
+    "dash": "hyphen",
+    "equals": "=",
+    "back tick": "`",
+    "slash": "slash",
+    "back slash": "backslash",
+    "semicolon": ";",
+    "quote": "squote",
+    "single quote": "squote",
+    "left square": "[",
+    "right square": "]",
+    "comma": "comma",
+    "period": "dot",
+    "dot": "dot",
+}
+other_keys_mapping = {key: Key(other_keys[key]) for key in other_keys}
+
+number_keys = {
+    "left": "left",
+    "right": "right",
+    "up": "up",
+    "down": "down",
+}
+
+shifted_keys_mapping = {
     "(wipe | back space | delete) [<n>]": Key("backspace:%(n)d"),
-    "escape": Key("escape"),
     "bang": Key("!"),
     "at sign": Key("@"),
     "hash | pound": Key("#"),
@@ -66,29 +89,20 @@ keyboard_mapping = {
     "left parentheses": Key("("),
     "right parentheses": Key(")"),
     "arguments": Key("(,),left"),  # TODO - Figure out how to make this shorter
-    "hyphen | minus | dash": Key("hyphen"),
+    "minus": Key("hyphen"),
     "underscore": Key("_"),
     "plus": Key("+"),
-    "equals": Key("="),
     "tilde": Key("~"),
-    "back tick": Key("`"),
     "left bracket": Key("{"),
     "right bracket": Key("}"),
-    "left square": Key("["),
-    "right square": Key("]"),
     "colon": Key("colon"),
-    "semicolon": Key(";"),
-    "single quote": Key("squote"),
     "double quote": Key("dquote"),
     "question mark": Key("question"),
-    "slash": Key("slash"),
-    "back slash": Key("backslash"),
     "bar": Key("|"),
-    "comma": Key("comma"),
-    "dot | period": Key("dot"),
     "left angle": Key("<"),
     "right angle": Key(">"),
 }
+keyboard_mapping = {**other_keys_mapping, **shifted_keys_mapping}
 
 edit_mapping = {
     "slap": Key("w-right") + Key("enter"),
@@ -182,7 +196,32 @@ keyboard_rule = SeriesMappingRule(
     defaults=defaults,
 )
 
+# Modifier rules
+modifiers = {
+    "shift": "s",
+    "command": "w",
+    "alt": "a",
+    "control": "c",
+    "command shift": "ws",
+    "control shift": "cs",
+    "alt shift": "as",
+    "command alt": "wa",
+    "control command": "cw",
+    "control alt": "ca",
+}
 
 grammar = Grammar("keyboard")
 grammar.add_rule(keyboard_rule)
+
+modifier_keys = {**alphabet, **other_keys, **number_keys}
+for modifier_command, modifier_code in modifiers.items():
+    mapping = {
+        modifier_key: Key(f"{modifier_code}-{modifier_keys[modifier_key]}")
+        for modifier_key in modifier_keys
+    }
+    rule = SeriesMappingRule(
+        name=modifier_command, mapping=mapping, command_prefix=modifier_command
+    )
+    grammar.add_rule(rule)
+
 grammar.load()
