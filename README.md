@@ -3,4 +3,3 @@ This repository contains my configs for dragonfly with the Kaldi speech engine. 
 
 # TODO
 * Find a way to unify CCR for keyboard and programming languages
-* Repeat commands for most commands (like "tab last second")
